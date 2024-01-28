@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./styles.css";
 
 export const Todo = () => {
+  const [todotext, setTodotext] = useState("");
   const [incompleteTodos, setIncompleteTodos] = useState([
     "TODO1です",
     "TODO2です",
@@ -10,11 +11,23 @@ export const Todo = () => {
     "TODO1でした",
     "TODO2でした",
   ]);
+  //React.hook.form?でシンプルに修正可能？
+  const onChangeTodoText = (event) => setTodotext(event.target.value);
+  const onClickAdd = () => {
+    if (todotext === "") return;
+    const newTodos = [...incompleteTodos, todotext];
+    setIncompleteTodos(newTodos);
+    setTodotext("");
+  };
   return (
     <>
       <div className="input-area">
-        <input placeholder="TODOを入力" />
-        <button>追加</button>
+        <input
+          placeholder="TODOを入力"
+          value={todotext}
+          onChange={onChangeTodoText}
+        />
+        <button onClick={onClickAdd}>追加</button>
       </div>
       <div className="incomplete-area">
         <p className="title">未完了のTODO</p>
