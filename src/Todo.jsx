@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { CompleteTodos } from "./components/CompleteTodos";
-import { IncompleteTodos } from "./components/IncompleteTodos";
-import { InputTodo } from "./components/InputTodo";
+import { IncompleteTodos } from "./components/incompleteTodos";
+import { InputTodo } from "./components/inputTodo";
 import "./styles.css";
 
 export const Todo = () => {
@@ -35,13 +35,20 @@ export const Todo = () => {
     setCompleteTodos(newCompleteTodos);
     setIncompleteTodos(newIncompleteTodos);
   };
+  const isMaxLimitIncompleteTodos = incompleteTodos.length >= 5;
   return (
     <>
       <InputTodo
+        disabled={isMaxLimitIncompleteTodos}
         todoText={todoText}
         onChange={onChangeTodoText}
         onClick={onClickAdd}
       />
+      {isMaxLimitIncompleteTodos && (
+        <p style={{ color: "red" }}>
+          未完了のTODOが多すぎる。すぐに対応しよう！
+        </p>
+      )}
       <IncompleteTodos
         incompleteTodos={incompleteTodos}
         onClickComp={onClickComp}
